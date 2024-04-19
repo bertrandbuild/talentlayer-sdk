@@ -61,6 +61,49 @@ describe('Service', () => {
         })
     })
 
+
+    describe('update', () => {
+        it('should update an existing service', async () => {
+            // Arrange
+            const serviceDetails = testServiceDetails;
+            const userId = testUserId;
+            const existingServiceId = testServiceId;
+
+            // Act
+            const response = await service.update(serviceDetails, userId, parseInt(existingServiceId));
+
+            // Assert
+            expect(response.cid).toEqual(testIpfsHash);
+            expect(response.tx).toEqual(testAddress);
+            expect(mockViemClient.writeContract).toHaveBeenCalledWith(
+                'talentLayerService',
+                'updateServiceData',
+                [userId, parseInt(existingServiceId), testIpfsHash]
+            );
+        })
+    })
+
+    describe('cancel', () => {
+        it('should cancel an existing service', async () => {
+            // Arrange
+            const userId = testUserId;
+            const serviceId = parseInt(testServiceId);
+
+            // Act
+            const response = await service.cancel(userId, serviceId);
+
+            // Assert
+            expect(response).toEqual(testAddress);
+            expect(mockViemClient.writeContract).toHaveBeenCalledWith(
+                'talentLayerService',
+                'cancelService',
+                [userId, serviceId]
+            );
+
+
+        })
+    })
+
     describe('search', () => {
         it('should reaturn services based on criteria', async () => {
             // Arranage

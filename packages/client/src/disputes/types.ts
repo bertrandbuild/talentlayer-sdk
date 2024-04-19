@@ -1,6 +1,6 @@
 import { TransactionHash } from '../types';
 
 export interface IDispute {
-  getArbitrationCost(): Promise<any>;
+  getArbitrationCost(platformId?: number): Promise<any>;
   setPrice(value: number | string): Promise<TransactionHash>;
 }

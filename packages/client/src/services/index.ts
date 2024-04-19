@@ -1,3 +1,4 @@
+import { Hash } from 'viem';
 import GraphQLClient from '../graphql';
 import IPFSClient from '../ipfs';
 import { Logger } from '../logger';
@@ -19,9 +20,15 @@ export interface IService {
     userId: string,
     platformId: number,
   ): Promise<ClientTransactionResponse>;
+  update(
+    serviceDetails: ServiceDetails,
+    userId: string,
+    existingServiceId: number,
+  ): Promise<ClientTransactionResponse>;
   updloadServiceDataToIpfs(serviceData: ServiceDetails): Promise<string>;
   getServices(params: IProps): Promise<any>;
   search(params: IProps): Promise<any>;
+  cancel(userId: string, serviceId: number): Promise<Hash>;
 }
 
 /**
@@ -150,5 +157,56 @@ export class Service {
     }
 
     throw new Error('Unable to create service');
+  }
+
+  /**
+   * Asynchronously updates an existing service.
+   * @param {ServiceDetails} serviceDetails - The details of the service to update.
+   * @param {string} userId - The user ID updating the service.
+   * @param {number} existingServiceId - The existing Service ID which is getting updated.
+   * @returns {Promise<ClientTransactionResponse>} - A promise that resolves to the transaction response of the service update.
+  */
+  public async update(
+    serviceDetails: ServiceDetails,
+    userId: string,
+    existingServiceId: number,
+  ): Promise<ClientTransactionResponse> {
+
+    const cid = await this.updloadServiceDataToIpfs(serviceDetails);
+
+    const tx = await this.viemClient.writeContract(
+      'talentLayerService',
+      'updateServiceData',
+      [userId, existingServiceId, cid],
+    );
+
+    if (cid && tx) {
+      return { cid, tx };
+    }
+
+    throw new Error('Unable to update service');
+  }
+
+  /**
+   * Cancel an existing service.
+   * @param {string} userId - Id of the user cancelling the service
+   * @param {number} serviceId - Id of the service being updated
+   * @returns {Promise<Hash>} - A promise that resolves to the transaction hash for the cancelService function call
+  */
+  public async cancel(
+    userId: string,
+    serviceId: number
+  ): Promise<Hash> {
+    const tx = await this.viemClient.writeContract(
+      'talentLayerService',
+      'cancelService',
+      [userId, serviceId]
+    )
+
+    if (tx) {
+      return tx;
+    }
+
+    throw new Error('Unable to cancel service');
   }
 }

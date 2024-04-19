@@ -27,7 +27,8 @@ export interface IProposal {
     serviceId: string,
     rateToken: string,
     rateAmount: string,
-    expirationDate: string
+    expirationDate: string,
+    platformId?: number
   ): Promise<ClientTransactionResponse>;
 
   update(

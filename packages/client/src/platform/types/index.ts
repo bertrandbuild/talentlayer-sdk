@@ -16,14 +16,15 @@ export type Arbitrator = {
 
 export interface IPlatform {
   getOne(id: string): Promise<any>;
-  update(data: PlatformDetails): Promise<ClientTransactionResponse>;
-  updateOriginServiceFeeRate(value: number): Promise<TransactionHash>;
-  updateOriginValidatedProposalFeeRate(value: number): Promise<TransactionHash>;
-  updateServicePostingFee(value: number): Promise<TransactionHash>;
-  updateProposalPostingFee(value: number): Promise<TransactionHash>;
+  update(data: PlatformDetails, platformId?: number): Promise<ClientTransactionResponse>;
+  updateOriginServiceFeeRate(value: number, platformId?: number): Promise<TransactionHash>;
+  updateOriginValidatedProposalFeeRate(value: number, platformId?: number): Promise<TransactionHash>;
+  updateServicePostingFee(value: number, platformId?: number): Promise<TransactionHash>;
+  updateProposalPostingFee(value: number, PlatformId?: number): Promise<TransactionHash>;
   getByOwner(address: `0x${string}`): Promise<any>;
   mint(platformName: string): Promise<TransactionHash>;
-  setFeeTimeout(timeout: number): Promise<TransactionHash>;
+  mintForAddress(platformName: string, address: string, mintFee: any): Promise<TransactionHash>;
+  setFeeTimeout(timeout: number, platformId?: number): Promise<TransactionHash>;
   getArbitrators(chainId: NetworkEnum): Arbitrator[];
-  updateArbitrator(address: `0x${string}`): Promise<TransactionHash>;
+  updateArbitrator(address: `0x${string}`, platformId?: number): Promise<TransactionHash>;
 }

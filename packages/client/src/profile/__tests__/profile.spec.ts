@@ -61,6 +61,18 @@ describe('Profile', () => {
         })
     })
 
+
+    describe('createForAddress', () => {
+        it('should create a new profile for a address and return a response', async () => {
+            const handle = testName;
+            const userAddress = testAddress;
+            const platformId = testPlatformId;
+            const handlePrice = "1000000000000000000";
+            const result = await profile.createForAddress(handle, userAddress, platformId, handlePrice);
+            expect(mockViemClient.writeContract).toHaveBeenCalledWith('talentLayerId', 'mintForAddress', [userAddress, platformId,handle], BigInt(handlePrice))
+        })
+    })
+
     describe('getByAddress', () => {
         it('getByAddress returns data for a given address', async () => {
 

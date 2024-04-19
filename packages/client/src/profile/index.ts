@@ -131,6 +131,25 @@ export class Profile {
     );
   }
 
+
+  /**
+ * create - Creates a new user profile by minting it on the TalentLayerId contract for a particular address. This function is typically called when a new user registers and a profile needs to be created in the system for that user.
+ * @param {string} handle - The user handle or username for the new profile.
+ * @param {Hash} userAddress - The address of the user whose profile is created.
+ * @param {number} platformId - The platform ID where the profile is created.
+ * @param {string} handlePrice - The fee for minting the new profile.
+ * @returns {Promise<Hash>} - A promise that resolves to the transaction hash once the profile creation transaction is completed.
+ */
+  public async createForAddress(handle: string, userAddress: Hash, platformId: number, handlePrice: string): Promise<Hash> {
+    const tx = await this.viemClient.writeContract(
+      'talentLayerId',
+      'mintForAddress',
+      [userAddress, platformId, handle],
+      BigInt(handlePrice),
+    );
+    return tx;
+  }
+
   /**
  * getBy - Retrieves profiles based on specified search criteria. This function is useful for fetching multiple profiles, for instance, when implementing search functionality.
  * @param {{ numberPerPage?: number; offset?: number; searchQuery?: string; }} params - The search parameters including pagination and search query.

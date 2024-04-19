@@ -5,9 +5,10 @@ export interface IEscrow {
     serviceId: string,
     proposalId: string,
     metaEvidenceCid: string,
+    platformId?: number
   ): Promise<ClientTransactionResponse>;
-  release(serviceId: string, amount: bigint, userId: number): Promise<any>;
-  reimburse(serviceId: string, amount: bigint, userId: number): Promise<any>;
+  release(serviceId: string, amount: bigint, userId: number, platformId?: number): Promise<any>;
+  reimburse(serviceId: string, amount: bigint, userId: number, platformId?: number): Promise<any>;
   getProtocolAndPlatformsFees(
     originServicePlatformId: string,
     originValidatedProposalPlatformId: string,

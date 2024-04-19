@@ -185,4 +185,26 @@ describe('Platform', () => {
 
         })
     })
+
+    describe('mintForAddress', () => {
+        it('should mint a platform Id for a address', async () => {
+            // Arrange
+            const platformName = 'racoon';
+            const address = testAddress;
+            const mintFee = BigInt("1000000000000000000");
+            
+
+            // Act
+            const result = await platform.mintForAddress(platformName, address, mintFee);
+
+            // Assert
+            expect(mockViemClient.writeContract).toHaveBeenCalledWith('talentLayerPlatformId',
+                'mintForAddress',
+                [platformName, address],
+                mintFee);
+            expect(result).toEqual(testAddress);
+        })
+    })
+
+
 });
