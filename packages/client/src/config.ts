@@ -7,6 +7,56 @@ import TalentLayerEscrow from './contracts/ABI/TalentLayerEscrow.json';
 import TalentLayerPlatformID from './contracts/ABI/TalentLayerPlatformID.json';
 import TalentLayerArbitrator from './contracts/ABI/TalentLayerArbitrator.json';
 
+const amoy: Config = {
+  networkId: NetworkEnum.AMOY,
+  subgraphUrl: 'https://api.studio.thegraph.com/query/41228/tl-graph-amoy/v0.0.1',
+  contracts: {
+    talentLayerId: {
+      address: '0xBe0d91F2371e23b9A26Fb8949E041A65dD0aDe83',
+      abi: TalentLayerID.abi,
+    },
+    talentLayerService: {
+      address: '0x5394632Fe8044BF3c3eF6fBD30d1121d5d796542',
+      abi: TalerLayerService.abi,
+    },
+    talentLayerReview: {
+      address: '0x194D3a30Ad6274F169c78D64A538a8F472c47819',
+      abi: TalentLayerReview.abi,
+    },
+    talentLayerEscrow: {
+      address: '0x466e65231DBe87b184c7cEeE8A319b4aB117915B',
+      abi: TalentLayerEscrow.abi,
+    },
+    talentLayerPlatformId: {
+      address: '0xbE56916C64f80040d46Ea5B32E1e851cE752cD3f',
+      abi: TalentLayerPlatformID.abi,
+    },
+    talentLayerArbitrator: {
+      address: '0x0F39E0ffEaBE0C100768F16988F0c9405428E2D8',
+      abi: TalentLayerArbitrator.abi,
+    },
+  },
+  escrowConfig: {
+    adminFee: '0',
+    adminWallet: '0xC01FcDfDE3B2ABA1eab76731493C617FfAED2F10',
+    timeoutPayment: 3600 * 24 * 7,
+  },
+  tokens: {
+    [AddressZero]: {
+      address: AddressZero,
+      symbol: 'MATIC',
+      name: 'Matic',
+      decimals: 18,
+    },
+    '0xe6b8a5CF854791412c1f6EFC7CAf629f5Df1c747': {
+      address: '0xe6b8a5CF854791412c1f6EFC7CAf629f5Df1c747',
+      symbol: 'USDC',
+      name: 'USDC Stablecoin',
+      decimals: 6,
+    },
+  },
+};
+
 const mumbai: Config = {
   networkId: NetworkEnum.MUMBAI,
   subgraphUrl: 'https://api.thegraph.com/subgraphs/name/talentlayer/talent-layer-mumbai',
@@ -164,6 +214,7 @@ const polygon: Config = {
 };
 
 const chains: { [networkId in NetworkEnum]: Config } = {
+  [NetworkEnum.AMOY]: amoy,
   [NetworkEnum.MUMBAI]: mumbai,
   [NetworkEnum.IEXEC]: iexec,
   [NetworkEnum.POLYGON]: polygon,
