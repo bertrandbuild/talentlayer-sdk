@@ -13,6 +13,7 @@ export enum NetworkEnum {
   AMOY = 80002,
   IEXEC = 134,
   POLYGON = 137,
+  FUJI = 43113,
   LOCAL = 1,
 }
 

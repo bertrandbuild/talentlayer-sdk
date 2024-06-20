@@ -1,5 +1,5 @@
 import { defineChain } from 'viem';
-import { polygon, polygonMumbai } from 'viem/chains';
+import { polygon, polygonMumbai, avalancheFuji } from 'viem/chains';
 import { NetworkEnum } from '../types';
 
 // @ts-ignore
@@ -62,4 +62,5 @@ export const chains = {
   [NetworkEnum.AMOY]: polygonAmoy,
   [NetworkEnum.IEXEC]: iexec,
   [NetworkEnum.POLYGON]: polygon,
+  [NetworkEnum.FUJI]: avalancheFuji,
 };

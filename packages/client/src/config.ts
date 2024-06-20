@@ -213,11 +213,62 @@ const polygon: Config = {
   },
 };
 
+const fuji: Config = {
+  networkId: NetworkEnum.FUJI,
+  subgraphUrl: 'https://api.studio.thegraph.com/query/41228/tl-graph-fuji/version/latest',
+  contracts: {
+    talentLayerId: {
+      address: '0x11BF027d41011a050c77E3BE7fB1942500C29928',
+      abi: TalentLayerID.abi,
+    },
+    talentLayerService: {
+      address: '0x037a42146f7803Ac85Eeb201A8aab483E10c3E1A',
+      abi: TalerLayerService.abi,
+    },
+    talentLayerReview: {
+      address: '0x5b1e55ca26f8128155f35a0c5804e292B1b66bb7',
+      abi: TalentLayerReview.abi,
+    },
+    talentLayerEscrow: {
+      address: '0x2D11f75E4af6626bA457532429D5FA6bF18ac011',
+      abi: TalentLayerEscrow.abi,
+    },
+    talentLayerPlatformId: {
+      address: '0x5582d6493449a9c8aE353715eaE55794056dBF19',
+      abi: TalentLayerPlatformID.abi,
+    },
+    talentLayerArbitrator: {
+      address: '0x0000000000000000000000000000000000000000', // TODO: update
+      abi: TalentLayerArbitrator.abi,
+    },
+  },
+  escrowConfig: {
+    adminFee: '0',
+    adminWallet: '0x754edfB906252B304f89c59c61f4368028bdcE6c',
+    timeoutPayment: 3600 * 24 * 7,
+  },
+  tokens: {
+    ['0x0000000000000000000000000000000000000000']: {
+      address: '0x0000000000000000000000000000000000000000',
+      symbol: 'AVAX',
+      name: 'Avax',
+      decimals: 18,
+    },
+    '0xAF82969ECF299c1f1Bb5e1D12dDAcc9027431160': {
+      address: '0xAF82969ECF299c1f1Bb5e1D12dDAcc9027431160',
+      symbol: 'USDC',
+      name: 'USDC Stablecoin',
+      decimals: 6,
+    },
+  },
+};
+
 const chains: { [networkId in NetworkEnum]: Config } = {
   [NetworkEnum.AMOY]: amoy,
   [NetworkEnum.MUMBAI]: mumbai,
   [NetworkEnum.IEXEC]: iexec,
   [NetworkEnum.POLYGON]: polygon,
+  [NetworkEnum.FUJI]: fuji,
   // This value is a place holder. The local value is provided through
   // dev config when using the sdk in dev mode
   [NetworkEnum.LOCAL]: mumbai,
